@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRCUISA Dev | Web Development & Digital Solutions</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              300: '#7dd3fc',
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+              800: '#075985',
+              900: '#0c4a6e',
+            },
+            dark: '#0f172a'
+          },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'wave': 'wave 8s linear infinite',
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'bounce-slow': 'bounce 3s infinite'
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-15px)' },
+            },
+            wave: {
+              '0%': { transform: 'rotate(0deg)' },
+              '10%': { transform: 'rotate(14deg)' },
+              '20%': { transform: 'rotate(-8deg)' },
+              '30%': { transform: 'rotate(14deg)' },
+              '40%': { transform: 'rotate(-4deg)' },
+              '50%': { transform: 'rotate(10deg)' },
+              '60%': { transform: 'rotate(0deg)' },
+              '100%': { transform: 'rotate(0deg)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background-color: #f8fafc;
+    }
+    
+    .hero-gradient {
+      background: linear-gradient(135deg, rgba(14,165,233,0.9) 0%, rgba(6,78,118,0.9) 100%);
+    }
+    
+    .code-bg {
+      background: #1e293b;
+      background-image: 
+        radial-gradient(#334155 1px, transparent 1px),
+        radial-gradient(#334155 1px, transparent 1px);
+      background-size: 40px 40px;
+      background-position: 0 0, 20px 20px;
+    }
+    
+    .service-card {
+      transition: all 0.3s ease;
+      perspective: 1000px;
+    }
+    
+    .service-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+    
+    .project-card {
+      transition: all 0.3s ease;
+    }
+    
+    .project-card:hover {
+      transform: scale(1.03);
+    }
+    
+    .tech-icon {
+      transition: all 0.3s ease;
+    }
+    
+    .tech-icon:hover {
+      transform: scale(1.2) rotate(5deg);
+    }
+    
+    .animated-underline {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .animated-underline::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 3px;
+      bottom: -5px;
+      left: 0;
+      background-color: #0ea5e9;
+      transform: scaleX(0);
+      transform-origin: bottom right;
+      transition: transform 0.3s ease-out;
+    }
+    
+    .animated-underline:hover::after {
+      transform: scaleX(1);
+      transform-origin: bottom left;
+    }
+  </style>
+</head>
+<body class="bg-gray-50">
+  <!-- Animated Background Elements -->
+  <div class="fixed inset-0 overflow-hidden -z-50 opacity-10">
+    <div class="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-primary-400 opacity-20 mix-blend-multiply filter blur-3xl animate-spin-slow"></div>
+    <div class="absolute bottom-1/3 right-1/3 w-80 h-80 rounded-full bg-primary-600 opacity-20 mix-blend-multiply filter blur-3xl animate-spin-slow animation-delay-2000"></div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-20 items-center">
+        <a href="#" class="flex items-center space-x-2">
+          <div class="w-10 h-10 rounded-lg bg-primary-600 flex items-center justify-center text-white font-bold text-xl">PR</div>
+          <span class="text-xl font-bold bg-gradient-to-r from-primary-600 to-blue-600 bg-clip-text text-transparent">PRCUISA Dev</span>
+        </a>
+        
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="#services" class="text-gray-700 hover:text-primary-600 transition-colors duration-300 font-medium">Services</a>
+          <a href="#work" class="text-gray-700 hover:text-primary-600 transition-colors duration-300 font-medium">Work</a>
+          <a href="#tech" class="text-gray-700 hover:text-primary-600 transition-colors duration-300 font-medium">Tech Stack</a>
+          <a href="#contact" class="px-4 py-2 bg-gradient-to-r from-primary-500 to-blue-600 text-white rounded-lg hover:shadow-lg transition-all duration-300">Get Started</a>
+        </div>
+        
+        <button id="mobile-menu-button" class="md:hidden text-gray-700">
+          <i class="fas fa-bars text-2xl"></i>
+        </button>
+      </div>
+    </div>
+    
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white/95 backdrop-blur-sm">
+      <div class="px-2 pt-2 pb-3 space-y-2">
+        <a href="#services" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50">Services</a>
+        <a href="#work" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50">Work</a>
+        <a href="#tech" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50">Tech Stack</a>
+        <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium text-center text-white bg-gradient-to-r from-primary-500 to-blue-600">Get Started</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-gradient text-white relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div class="text-center lg:text-left relative z-10">
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+            Build Your <span class="animated-underline">Digital Presence</span> With Modern Web Solutions
+          </h1>
+          <p class="text-xl text-primary-100 mb-8 max-w-lg">
+            We create fast, responsive, and visually stunning websites that drive results for your business.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            <a href="#contact" class="px-8 py-3 bg-white text-primary-700 font-bold rounded-lg hover:bg-gray-100 transition-colors duration-300 text-center">
+              Start Your Project
+            </a>
+            <a href="#work" class="px-8 py-3 border-2 border-white text-white font-bold rounded-lg hover:bg-white/10 transition-colors duration-300 text-center">
+              View Portfolio
+            </a>
+          </div>
+        </div>
+        
+        <div class="relative">
+          <div class="code-bg rounded-2xl shadow-2xl overflow-hidden p-6">
+            <div class="flex mb-4">
+              <div class="w-3 h-3 rounded-full bg-red-500 mr-2"></div>
+              <div class="w-3 h-3 rounded-full bg-yellow-500 mr-2"></div>
+              <div class="w-3 h-3 rounded-full bg-green-500"></div>
+            </div>
+            <pre class="text-green-400 text-sm md:text-base overflow-x-auto">
+<code><span class="text-blue-400">import</span> React <span class="text-blue-400">from</span> <span class="text-yellow-300">'react'</span>
+<span class="text-blue-400">import</span> { NextJS, Tailwind, Prisma } <span class="text-blue-400">from</span> <span class="text-yellow-300">'@prcuisa/dev-stack'</span>
+
+<span class="text-blue-400">const</span> <span class="text-pink-400">AwesomeWebsite</span> = () => (
+  &lt;<span class="text-red-400">div</span> className=<span class="text-yellow-300">"max-w-7xl mx-auto"</span>>
+    &lt;<span class="text-red-400">h1</span>>Your Vision, Our Code&lt;/<span class="text-red-400">h1</span>>
+    &lt;<span class="text-red-400">p</span>>Cutting-edge web solutions&lt;/<span class="text-red-400">p</span>>
+  &lt;/<span class="text-red-400">div</span>>
+)
+
+<span class="text-blue-400">export</span> <span class="text-blue-400">default</span> AwesomeWebsite</code></pre>
+          </div>
+          <div class="absolute -bottom-6 -right-6 w-32 h-32 rounded-full bg-primary-400/20 animate-float"></div>
+          <div class="absolute -top-6 -left-6 w-24 h-24 rounded-full bg-blue-400/20 animate-float-reverse"></div>
+        </div>
+      </div>
+    </div>
+    <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-gray-50 to-transparent"></div>
+  </section>
+
+  <!-- Clients Section -->
+  <section class="py-12 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <p class="text-center text-sm font-semibold uppercase tracking-wider text-gray-500 mb-8">Trusted by innovative companies</p>
+      <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center">
+        <div class="flex justify-center opacity-70 hover:opacity-100 transition-opacity">
+          <img src="https://logo.clearbit.com/google.com" alt="Google" class="h-8">
+        </div>
+        <div class="flex justify-center opacity-70 hover:opacity-100 transition-opacity">
+          <img src="https://logo.clearbit.com/shopify.com" alt="Shopify" class="h-8">
+        </div>
+        <div class="flex justify-center opacity-70 hover:opacity-100 transition-opacity">
+          <img src="https://logo.clearbit.com/spotify.com" alt="Spotify" class="h-8">
+        </div>
+        <div class="flex justify-center opacity-70 hover:opacity-100 transition-opacity">
+          <img src="https://logo.clearbit.com/airbnb.com" alt="Airbnb" class="h-8">
+        </div>
+        <div class="flex justify-center opacity-70 hover:opacity-100 transition-opacity">
+          <img src="https://logo.clearbit.com/slack.com" alt="Slack" class="h-8">
+        </div>
+        <div class="flex justify-center opacity-70 hover:opacity-100 transition-opacity">
+          <img src="https://logo.clearbit.com/netflix.com" alt="Netflix" class="h-8">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section id="services" class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto">
+        <span class="inline-block px-3 py-1 text-sm font-medium rounded-full bg-primary-100 text-primary-800 mb-4">Our Services</span>
+        <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">Full-Cycle Web Development</h2>
+        <p class="text-lg text-gray-600 mx-auto">From concept to deployment, we handle every aspect of your digital presence.</p>
+      </div>
+      
+      <div class="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Service 1 -->
+        <div class="service-card bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl">
+          <div class="h-48 bg-primary-50 flex items-center justify-center relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-primary-500/10 to-blue-500/10"></div>
+            <i class="fas fa-laptop-code text-6xl text-primary-600 animate-pulse-slow"></i>
+            <div class="absolute -bottom-6 -right-6 w-24 h-24 rounded-full bg-primary-400/20 animate-float"></div>
+          </div>
+          <div class="p-8">
+            <h3 class="text-xl font-bold text-gray-900 mb-3">Custom Web Development</h3>
+            <p class="text-gray-600 mb-6">Tailor-made websites and web applications built with modern technologies for optimal performance.</p>
+            <a href="#" class="text-primary-600 font-medium inline-flex items-center">
+              Learn more <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+            </a>
+          </div>
+        </div>
+        
+        <!-- Service 2 -->
+        <div class="service-card bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl">
+          <div class="h-48 bg-primary-50 flex items-center justify-center relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-primary-500/10 to-blue-500/10"></div>
+            <i class="fas fa-mobile-alt text-6xl text-primary-600 animate-wave"></i>
+            <div class="absolute -top-6 -left-6 w-24 h-24 rounded-full bg-blue-400/20 animate-float-reverse"></div>
+          </div>
+          <div class="p-8">
+            <h3 class="text-xl font-bold text-gray-900 mb-3">Responsive Design</h3>
+            <p class="text-gray-600 mb-6">Pixel-perfect designs that work flawlessly on all devices, from desktop to mobile.</p>
+            <a href="#" class="text-primary-600 font-medium inline-flex items-center">
+              Learn more <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+            </a>
+          </div>
+        </div>
+        
+        <!-- Service 3 -->
+        <div class="service-card bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl">
+          <div class="h-48 bg-primary-50 flex items-center justify-center relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-primary-500/10 to-blue-500/10"></div>
+            <i class="fas fa-rocket text-6xl text-primary-600 animate-bounce-slow"></i>
+            <div class="absolute -bottom-6 -right-6 w-24 h-24 rounded-full bg-primary-400/20 animate-float"></div>
+          </div>
+          <div class="p-8">
+            <h3 class="text-xl font-bold text-gray-900 mb-3">Performance Optimization</h3>
+            <p class="text-gray-600 mb-6">Lightning-fast load times and smooth interactions for better user experience and SEO.</p>
+            <a href="#" class="text-primary-600 font-medium inline-flex items-center">
+              Learn more <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Work Section -->
+  <section id="work" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto">
+        <span class="inline-block px-3 py-1 text-sm font-medium rounded-full bg-primary-100 text-primary-800 mb-4">Our Work</span>
+        <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">Recent Projects</h2>
+        <p class="text-lg text-gray-600 mx-auto">Explore some of our latest web development projects.</p>
+      </div>
+      
+      <div class="mt-16">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Project 1 -->
+          <div class="project-card group relative overflow-hidden rounded-xl shadow-lg">
+            <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="E-commerce Project" class="w-full h-80 object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <h3 class="text-xl font-bold text-white">NovaStore</h3>
+              <p class="text-primary-300 mb-4">E-commerce Platform</p>
+              <p class="text-gray-300 mb-4">Modern online store with payment integration and inventory management.</p>
+              <a href="#" class="mt-2 inline-flex items-center text-white font-medium">
+                View Project <i class="fas fa-arrow-right ml-2"></i>
+              </a>
+            </div>
+          </div>
+          
+          <!-- Project 2 -->
+          <div class="project-card group relative overflow-hidden rounded-xl shadow-lg">
+            <img src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="SaaS Dashboard" class="w-full h-80 object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <h3 class="text-xl font-bold text-white">AnalyticsPro</h3>
+              <p class="text-primary-300 mb-4">SaaS Dashboard</p>
+              <p class="text-gray-300 mb-4">Real-time data visualization and reporting platform.</p>
+              <a href="#" class="mt-2 inline-flex items-center text-white font-medium">
+                View Project <i class="fas fa-arrow-right ml-2"></i>
+              </a>
+            </div>
+          </div>
+          
+          <!-- Project 3 -->
+          <div class="project-card group relative overflow-hidden rounded-xl shadow-lg">
+            <img src="https://images.unsplash.com/photo-1559028012-481c04fa702d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="Mobile App" class="w-full h-80 object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <h3 class="text-xl font-bold text-white">FitTrack</h3>
+              <p class="text-primary-300 mb-4">Health & Fitness App</p>
+              <p class="text-gray-300 mb-4">Cross-platform mobile application with wearable integration.</p>
+              <a href="#" class="mt-2 inline-flex items-center text-white font-medium">
+                View Project <i class="fas fa-arrow-right ml-2"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="mt-12 text-center">
+          <a href="#" class="inline-flex items-center px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:border-primary-400 hover:text-primary-600 transition-colors duration-300">
+            View All Projects
+            <i class="fas fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tech Stack Section -->
+  <section id="tech" class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto">
+        <span class="inline-block px-3 py-1 text-sm font-medium rounded-full bg-primary-100 text-primary-800 mb-4">Our Tech Stack</span>
+        <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">Modern Technologies We Use</h2>
+        <p class="text-lg text-gray-600 mx-auto">We leverage cutting-edge tools to build fast, scalable, and secure web applications.</p>
+      </div>
+      
+      <div class="mt-16">
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-8">
+          <!-- Tech 1 -->
+          <div class="tech-icon bg-white p-6 rounded-xl shadow-md flex flex-col items-center justify-center">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" alt="Next.js" class="h-16 w-16">
+            <span class="mt-4 font-medium text-gray-700">Next.js</span>
+          </div>
+          
+          <!-- Tech 2 -->
+          <div class="tech-icon bg-white p-6 rounded-xl shadow-md flex flex-col items-center justify-center">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React" class="h-16 w-16">
+            <span class="mt-4 font-medium text-gray-700">React</span>
+          </div>
+          
+          <!-- Tech 3 -->
+          <div class="tech-icon bg-white p-6 rounded-xl shadow-md flex flex-col items-center justify-center">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg" alt="Tailwind CSS" class="h-16 w-16">
+            <span class="mt-4 font-medium text-gray-700">Tailwind</span>
+          </div>
+          
+          <!-- Tech 4 -->
+          <div class="tech-icon bg-white p-6 rounded-xl shadow-md flex flex-col items-center justify-center">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" alt="TypeScript" class="h-16 w-16">
+            <span class="mt-4 font-medium text-gray-700">TypeScript</span>
+          </div>
+          
+          <!-- Tech 5 -->
+          <div class="tech-icon bg-white p-6 rounded-xl shadow-md flex flex-col items-center justify-center">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js" class="h-16 w-16">
+            <span class="mt-4 font-medium text-gray-700">Node.js</span>
+          </div>
+          
+          <!-- Tech 6 -->
+          <div class="tech-icon bg-white p-6 rounded-xl shadow-md flex flex-col items-center justify-center">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/prisma/prisma-original.svg" alt="Prisma" class="h-16 w-16">
+            <span class="mt-4 font-medium text-gray-700">Prisma</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-20 bg-gradient-to-r from-primary-600 to-blue-600 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-6">Ready to Build Something Amazing?</h2>
+      <p class="text-xl text-primary-100 mb-8 max-w-3xl mx-auto">Let's discuss your project and how we can bring your vision to life with cutting-edge web technology.</p>
+      <a href="#contact" class="inline-flex items-center px-8 py-4 bg-white text-primary-700 font-bold rounded-lg hover:bg-gray-100 transition-colors duration-300">
+        Get Started
+        <i class="fas fa-arrow-right ml-2"></i>
+      </a>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <span class="inline-block px-3 py-1 text-sm font-medium rounded-full bg-primary-100 text-primary-800 mb-4">Contact Us</span>
+          <h2 class="text-3xl font-bold text-gray-900 mb-6">Let's Work Together</h2>
+          <p class="text-lg text-gray-600 mb-8">Have a project in mind or want to learn more about our services? Fill out the form and we'll get back to you within 24 hours.</p>
+          
+          <div class="space-y-6">
+            <div class="flex items-start">
+              <div class="flex-shrink-0">
+                <div class="w-12 h-12 rounded-lg bg-primary-100 flex items-center justify-center">
+                  <i class="fas fa-envelope text-primary-600"></i>
+                </div>
+              </div>
+              <div class="ml-4">
+                <h3 class="text-lg font-medium text-gray-900">Email Us</h3>
+                <p class="text-gray-600">dev@prcuisa.com</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start">
+              <div class="flex-shrink-0">
+                <div class="w-12 h-12 rounded-lg bg-primary-100 flex items-center justify-center">
+                  <i class="fas fa-phone-alt text-primary-600"></i>
+                </div>
+              </div>
+              <div class="ml-4">
+                <h3 class="text-lg font-medium text-gray-900">Call Us</h3>
+                <p class="text-gray-600">+62 123 4567 893</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start">
+              <div class="flex-shrink-0">
+                <div class="w-12 h-12 rounded-lg bg-primary-100 flex items-center justify-center">
+                  <i class="fas fa-map-marker-alt text-primary-600"></i>
+                </div>
+              </div>
+              <div class="ml-4">
+                <h3 class="text-lg font-medium text-gray-900">Visit Us</h3>
+                <p class="text-gray-600">Jl. Digital No. 88, Jakarta, Indonesia</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-gray-50 p-8 sm:p-10 rounded-xl shadow-md">
+          <form class="space-y-6">
+            <div>
+              <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+              <input type="text" id="name" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition">
+            </div>
+            
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+              <input type="email" id="email" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition">
+            </div>
+            
+            <div>
+              <label for="service" class="block text-sm font-medium text-gray-700 mb-1">Service Interested In</label>
+              <select id="service" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition">
+                <option>Select a service</option>
+                <option>Custom Web Development</option>
+                <option>E-commerce Website</option>
+                <option>Web Application</option>
+                <option>Website Redesign</option>
+                <option>Other</option>
+              </select>
+            </div>
+            
+            <div>
+              <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Project Details</label>
+              <textarea id="message" rows="4" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition"></textarea>
+            </div>
+            
+            <div>
+              <button type="submit" class="w-full px-6 py-3 bg-gradient-to-r from-primary-500 to-blue-600 text-white font-medium rounded-lg hover:shadow-lg transition-all duration-300">
+                Send Message
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white pt-16 pb-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8">
+        <div class="lg:col-span-2">
+          <a href="#" class="flex items-center space-x-2 mb-6">
+            <div class="w-10 h-10 rounded-lg bg-primary-600 flex items-center justify-center text-white font-bold text-xl">PR</div>
+            <span class="text-xl font-bold bg-gradient-to-r from-primary-400 to-blue-400 bg-clip-text text-transparent">PRCUISA Dev</span>
+          </a>
+          <p class="text-gray-400 mb-6">Cutting-edge web development solutions for businesses and startups.</p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+              <i class="fab fa-github text-xl"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+              <i class="fab fa-twitter text-xl"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+              <i class="fab fa-linkedin-in text-xl"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+              <i class="fab fa-dribbble text-xl"></i>
+            </a>
+          </div>
+        </div>
+        
+        <div>
+          <h3 class="text-sm font-semibold uppercase tracking-wider text-gray-300 mb-4">Services</h3>
+          <ul class="space-y-3">
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Web Development</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">UI/UX Design</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">E-commerce</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Web Apps</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="text-sm font-semibold uppercase tracking-wider text-gray-300 mb-4">Company</h3>
+          <ul class="space-y-3">
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">About Us</a></li>
+            <li><a href="#work" class="text-gray-400 hover:text-white transition-colors duration-300">Portfolio</a></li>
+            <li><a href="#tech" class="text-gray-400 hover:text-white transition-colors duration-300">Tech Stack</a></li>
+            <li><a href="#contact" class="text-gray-400 hover:text-white transition-colors duration-300">Contact</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="text-sm font-semibold uppercase tracking-wider text-gray-300 mb-4">Legal</h3>
+          <ul class="space-y-3">
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Privacy Policy</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Terms of Service</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Cookie Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="mt-12 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
+        <p class="text-gray-400 text-sm">
+          &copy; 2023 PRCUISA Dev. All rights reserved.
+        </p>
+        <div class="mt-4 md:mt-0">
+          <a href="#" class="text-gray-400 hover:text-white text-sm transition-colors duration-300">Privacy Policy</a>
+          <span class="mx-2 text-gray-600">•</span>
+          <a href="#" class="text-gray-400 hover:text-white text-sm transition-colors duration-300">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Mobile menu toggle
+    document.getElementById('mobile-menu-button').addEventListener('click', function() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+    });
+
+    // Animated underline for navigation
+    const navLinks = document.querySelectorAll('nav a');
+    navLinks.forEach(link => {
+      link.addEventListener('mouseenter', function() {
+        this.classList.add('animated-underline');
+      });
+      link.addEventListener('mouseleave', function() {
+        this.classList.remove('animated-underline');
+      });
+    });
+  </script>
+</body>
+</html>
